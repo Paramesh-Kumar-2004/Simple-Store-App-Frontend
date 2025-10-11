@@ -1,111 +1,23 @@
-import axios from "axios";
+const axios = require("axios");
 
-const API_URL = "http://10.0.2.2:5000/api/v1";
-
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-    withCredentials: true, // Important for cookies / JWT
-    headers: {
-        "Content-Type": "application/json",
-    },
+// ⚠️ Use 10.0.2.2 for Android emulator, localhost works in Node.js directly
+const api = axios.create({
+    // baseURL: "http://10.0.2.2:2004/api/v1",
+    baseURL: "http://10.57.195.238:2004/api/v1",
 });
 
-
-// 1. REGISTER USER
-export const registerUser = async (data) => {
+// Function to fetch all products
+async function fetchAllProducts() {
     try {
-        const res = await axiosInstance.post("/register", data);
-        return res.data;
+        console.log("Fetching products...");
+        const res = await api.get("/getAllProducts");
+        console.log("Products fetched:", res.data); // actual response
+        return res.data; // returns { products: [...] } if backend sends like that
     } catch (error) {
-        throw error.response?.data || { message: error.message };
+        console.error("Error fetching products:", error.response?.data || error.message);
+        return null;
     }
-};
+}
 
-
-// 2. LOGIN USER
-export const loginUser = async (data) => {
-    try {
-        const res = await axiosInstance.post("/login", data);
-        return res.data;
-    } catch (error) {
-        throw error.response?.data || { message: error.message };
-    }
-};
-
-
-// 3. GET ALL USERS (ADMIN ONLY)
-export const getUsers = async (token) => {
-    try {
-        const res = await axiosInstance.get("/users", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return res.data;
-    } catch (error) {
-        throw error.response?.data || { message: error.message };
-    }
-};
-
-
-// 4. GET SINGLE USER
-export const getSingleUser = async (id, token) => {
-    try {
-        const res = await axiosInstance.get(`/user/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return res.data;
-    } catch (error) {
-        throw error.response?.data || { message: error.message };
-    }
-};
-
-
-
-// 5. CREATE USER (ADMIN ONLY)
-export const createUser = async (data, token) => {
-    try {
-        const res = await axiosInstance.post("/users", data, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return res.data;
-    } catch (error) {
-        throw error.response?.data || { message: error.message };
-    }
-};
-
-
-
-// 6. UPDATE USER (ADMIN ONLY)
-export const updateUser = async (id, data, token) => {
-    try {
-        const res = await axiosInstance.put(`/user/${id}`, data, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return res.data;
-    } catch (error) {
-        throw error.response?.data || { message: error.message };
-    }
-};
-
-
-// 7. DELETE USER (ADMIN ONLY)
-export const deleteUser = async (id, token) => {
-    try {
-        const res = await axiosInstance.delete(`/user/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return res.data;
-    } catch (error) {
-        throw error.response?.data || { message: error.message };
-    }
-};
+// Example usage
+fetchAllProducts();

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import CallButton from "../Components/MakeCall";
-
+import { getChars } from "../API/UserAPI";
 
 export default function HomeScreen() {
     return (
