@@ -11,6 +11,7 @@ export default function HomeScreen() {
                     source={require("../assets/Logo.jpg")}
                     style={styles.Logo}
                 />
+                <Text style={styles.text}>Store</Text>
             </View>
 
             <View>
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
         marginTop: 24,
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: 'center',
     },
     text: {
         color: "#333",

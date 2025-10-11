@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
+
 export default function WelcomeScreen({ navigation }) {
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation.replace("Home");
+            navigation.replace("Login");
         }, 3000);
 
         return () => clearTimeout(timer);
