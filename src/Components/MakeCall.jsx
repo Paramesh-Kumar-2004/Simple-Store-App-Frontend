@@ -1,8 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Text, Linking, Alert, StyleSheet } from 'react-native';
+import { Phone_Number } from '../Const/Const';
 
-const CallButton = ({ phoneNumber=0 }) => {
-  
+const CallButton = ({ phoneNumber = Phone_Number }) => {
+
   const handleCall = () => {
     if (!phoneNumber) {
       Alert.alert("Error", "Phone number is not provided");
