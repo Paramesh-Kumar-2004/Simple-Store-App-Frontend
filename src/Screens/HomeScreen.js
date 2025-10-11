@@ -7,16 +7,17 @@ export default function HomeScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Home Screen</Text>
-            <CallButton />
+            <Text style={styles.text}>Home Screen</Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        padding: 24,
         flex: 1,
         backgroundColor: "#fff",
-        justifyContent: "center",
+        justifyContent: "space-between",
         alignItems: "center",
     },
     text: {
