@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import Toast from "react-native-toast-message";
+
 import { loginUser } from "../API/UserAPI";
+
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
@@ -17,11 +20,21 @@ export default function LoginScreen({ navigation }) {
             setLoading(true);
             const data = await loginUser({ email, password });
             console.log("Login Success:", data);
-            Alert.alert("Success", "Login Successful ✅");
+            // Alert.alert("Success", "Login Successful ✅");
+            Toast.show({
+                type: "success",
+                text1: "Log In successfull!",
+                position: "top",
+            });
             navigation.replace("Home")
         } catch (error) {
             console.log("Login Error:", error);
-            Alert.alert("Login Failed", error.message || "Something went wrong");
+            Toast.show({
+                type: "error",
+                text1: "Failed to login!",
+                position: "top",
+            });
+            // Alert.alert("Login Failed", error.message || "Something went wrong");
         } finally {
             setLoading(false);
         }
@@ -61,7 +74,7 @@ export default function LoginScreen({ navigation }) {
                 Don't Have Account
                 <Text
                     style={styles.registerButton}
-                    onPress={() => navigation.replace("Welcome")}
+                    onPress={() => navigation.replace("Register")}
                 > Register</Text> Here
             </Text>
         </View>

@@ -11,6 +11,11 @@ export default function HomeScreen() {
 
     const logout = async () => {
         const response = await logoutUser()
+        Toast.show({
+            type: "error",
+            text1: "Log Out Successfull",
+            position: "top",
+        });
         navigation.replace("Welcome")
     }
 
