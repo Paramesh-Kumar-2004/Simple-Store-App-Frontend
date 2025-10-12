@@ -1,9 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import CallButton from "../Components/MakeCall";
-import { getChars } from "../API/UserAPI";
+import { getChars, logoutUser } from "../API/UserAPI";
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function HomeScreen() {
+
+    const navigation = useNavigation();
+
+    const logout = async () => {
+        const response = await logoutUser()
+        navigation.replace("Welcome")
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.Head}>
@@ -11,11 +21,15 @@ export default function HomeScreen() {
                     source={require("../assets/Logo.jpg")}
                     style={styles.Logo}
                 />
-                <Text style={styles.text}>Store</Text>
+                <TouchableOpacity onPress={logout}>
+                    <Image style={styles.Logout}
+                        source={require("../assets/Logout.jpg")}
+                    />
+                </TouchableOpacity>
             </View>
 
             <View>
-                <Text style={styles.text}>Home Screen</Text>
+                <Text>Home</Text>
             </View>
 
         </View>
@@ -46,4 +60,9 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
     },
+    Logout: {
+        width: 40,
+        height: 40,
+        borderRadius: 50,
+    }
 });

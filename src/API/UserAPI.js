@@ -41,7 +41,6 @@ export async function getUsers() {
         throw error.response?.data || { message: error.message };
     }
 }
-getUsers()
 
 
 // 4 GET SINGLE USER
@@ -89,4 +88,19 @@ export async function deleteUser(id) {
         console.error("Delete User Error:", error.response?.data || error.message);
         throw error.response?.data || { message: error.message };
     }
+}
+
+
+// 8 LOGOUT USER
+export async function logoutUser() {
+    try {
+        const response = await api.get("/logout")
+        console.log(response.data)
+        return (response.data)
+    }
+    catch (error) {
+        console.error("Logout User Error:", error.response?.data || error.message);
+        throw error.response?.data || { message: error.message };
+    }
+
 }
