@@ -1,21 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import CallButton from "../Components/MakeCall";
-import { getChars, logoutUser } from "../API/UserAPI";
-import { useNavigation } from "@react-navigation/native";
+import { getChars, logoutUser } from "../API/API";
+import ProductList from "../Components/ProductList";
 
 
-export default function HomeScreen() {
-
-    const navigation = useNavigation();
+export default function HomeScreen({ navigation }) {
 
     const logout = async () => {
         const response = await logoutUser()
-        Toast.show({
-            type: "error",
-            text1: "Log Out Successfull",
-            position: "top",
-        });
         navigation.replace("Welcome")
     }
 
@@ -33,8 +26,13 @@ export default function HomeScreen() {
                 </TouchableOpacity>
             </View>
 
+            <Text
+                onPress={() => navigation.replace("AddProducts")}
+            > Register</Text>
+
+
             <View>
-                <Text>Home</Text>
+                <ProductList />
             </View>
 
         </View>

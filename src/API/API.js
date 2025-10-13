@@ -2,11 +2,14 @@ const axios = require("axios");
 
 
 const api = axios.create({
-    baseURL: "http://10.57.195.238:2004/api/v1",
+    baseURL: "http://10.209.41.238:2004/api/v1",
 });
 
 
 
+
+
+// USERS APIs
 // 1. REGISTER USER
 export async function registerUser(data) {
     try {
@@ -17,7 +20,6 @@ export async function registerUser(data) {
         throw error.response?.data || { message: error.message };
     }
 }
-
 
 // 2. LOGIN USER
 export async function loginUser(data) {
@@ -30,7 +32,6 @@ export async function loginUser(data) {
     }
 }
 
-
 // 3 GET ALL USERS
 export async function getUsers() {
     try {
@@ -41,7 +42,6 @@ export async function getUsers() {
         throw error.response?.data || { message: error.message };
     }
 }
-
 
 // 4 GET SINGLE USER
 export async function getSingleUser(id) {
@@ -54,7 +54,6 @@ export async function getSingleUser(id) {
     }
 }
 
-
 // 5 CREATE USER (ADMIN)
 export async function createUser(data) {
     try {
@@ -65,7 +64,6 @@ export async function createUser(data) {
         throw error.response?.data || { message: error.message };
     }
 }
-
 
 // 6 UPDATE USER
 export async function updateUser(id, data) {
@@ -78,7 +76,6 @@ export async function updateUser(id, data) {
     }
 }
 
-
 // 7 DELETE USER
 export async function deleteUser(id) {
     try {
@@ -90,17 +87,75 @@ export async function deleteUser(id) {
     }
 }
 
-
 // 8 LOGOUT USER
 export async function logoutUser() {
     try {
         const response = await api.get("/logout")
-        console.log(response.data)
         return (response.data)
     }
     catch (error) {
         console.error("Logout User Error:", error.response?.data || error.message);
         throw error.response?.data || { message: error.message };
     }
+}
 
+
+
+
+
+// Product APIs
+// 1. CREATE PRODUCT
+export async function createProduct(data) {
+    try {
+        const response = await api.post("/createProducts", data);
+        return response.data;
+    } catch (error) {
+        console.error("Create Error:", error.response?.data || error.message);
+        throw error.response?.data || { message: error.message };
+    }
+}
+
+// 2 GET ALL PRODUCTS
+export async function getAllProducts() {
+    try {
+        const response = await api.get("/getAllProducts");
+        return response.data;
+    } catch (error) {
+        console.error("Get Product Error:", error.response?.data || error.message);
+        throw error.response?.data || { message: error.message };
+    }
+}
+
+// 3 GET SINGLE USER
+export async function getSingleProduct(id) {
+    try {
+        const response = await api.get(`/getSingleProduct/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Get Single User Error:", error.response?.data || error.message);
+        throw error.response?.data || { message: error.message };
+    }
+}
+
+
+// 4 UPDATE PRODUCTS (ADMIN)
+export async function updateProduct(id, data) {
+    try {
+        const response = await api.put(`/editProducts/${id}`, data);
+        return response.data;
+    } catch (error) {
+        console.error("Update Product Error:", error.response?.data || error.message);
+        throw error.response?.data || { message: error.message };
+    }
+}
+
+// 5 DELETE PRODUCT
+export async function deleteProduct(id) {
+    try {
+        const response = await api.delete(`/editProducts/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Delete User Error:", error.response?.data || error.message);
+        throw error.response?.data || { message: error.message };
+    }
 }

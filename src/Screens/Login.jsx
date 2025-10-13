@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
-import { loginUser } from "../API/UserAPI";
+import { loginUser } from "../API/API";
 
 
 export default function LoginScreen({ navigation }) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("vp@gmail.com");
+    const [password, setPassword] = useState("2004");
     const [loading, setLoading] = useState(false);
 
     const handleLogin = async () => {
