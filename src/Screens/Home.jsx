@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import CallButton from "../Components/CallButton";
 import { getChars, logoutUser } from "../API/API";
 import ProductList from "../Components/ProductList";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function HomeScreen({ navigation }) {
 
+    const [userRole, setUserRole] = useState("normal")
+
     const logout = async () => {
         const response = await logoutUser()
         navigation.replace("Welcome")
+    }
+
+    useEffect(() => {
+        getUserRole()
+    }, []);
+
+
+    const getUserRole = async () => {
+        const role = await AsyncStorage.getItem("role");
+        if (role) {
+            setUserRole(role);
+        }
     }
 
     return (
@@ -30,12 +45,14 @@ export default function HomeScreen({ navigation }) {
                 <ProductList />
             </View>
 
-            <TouchableOpacity
-                style={styles.Registerbutton}
-                onPress={() => navigation.replace("AddProducts")}
-            >
-                <Text style={styles.buttonText}>Add New Product</Text>
-            </TouchableOpacity>
+            {userRole == "admin" && (
+                <TouchableOpacity
+                    style={styles.Registerbutton}
+                    onPress={() => navigation.replace("AddProducts")}
+                >
+                    <Text style={styles.buttonText}>Add New Product</Text>
+                </TouchableOpacity>
+            )}
 
         </View>
     );

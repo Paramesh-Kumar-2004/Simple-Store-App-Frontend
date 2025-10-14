@@ -20,10 +20,9 @@ const ProductList = () => {
     }, []);
 
     const getUserRole = async () => {
-        const role = await AsyncStorage.getItem("data");
+        const role = await AsyncStorage.getItem("role");
         if (role) {
             setUserRole(role);
-            console.log("User Role :", role);
         }
     }
 
@@ -61,11 +60,37 @@ const ProductList = () => {
     const renderItem = ({ item }) => (
         <View style={styles.card}>
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.model}>Model: {item.model}</Text>
-            <Text style={styles.price}>Price: ${item.price}</Text>
-            <Text style={styles.category}>Category: {item.category}</Text>
-            <Text style={styles.stock}>Stock: {item.stock}</Text>
-            <Text style={styles.seller}>Seller: {item.sellerName}</Text>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.price}>Price: ${item.price}</Text>
+                    <Text style={styles.model}>
+                        <Text style={{ fontWeight: "bold" }}>Model: </Text>
+                        {item.model}
+                    </Text>
+                    <Text style={styles.category}>
+                        <Text style={{ fontWeight: "bold" }}>Category: </Text>
+                        {item.category}
+                    </Text>
+                </View>
+
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.stock}>
+                        <Text style={{ fontWeight: "bold" }}>Stock: </Text>
+                        {item.stock}
+                    </Text>
+                    <Text style={styles.seller}>
+                        <Text style={{ fontWeight: "bold" }}>Seller: </Text>
+                        {item.sellerName}
+                    </Text>
+                    <Text style={styles.seller}>
+                        <Text style={{ fontWeight: "bold" }}>Phone: </Text>
+                        {item.sellerPhone}
+                    </Text>
+
+                </View>
+
+            </View>
             <View style={styles.Buttons}>
                 {userRole == "admin" && (
                     <TouchableOpacity style={styles.DeleteButton}
@@ -101,6 +126,7 @@ const ProductList = () => {
             keyExtractor={(item) => item._id}
             renderItem={renderItem}
             contentContainerStyle={styles.listContainer}
+            showsVerticalScrollIndicator={false}
         />
     );
 };

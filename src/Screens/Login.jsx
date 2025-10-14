@@ -27,7 +27,7 @@ export default function LoginScreen({ navigation }) {
                 text1: "Log In successfull!",
                 position: "top",
             });
-            const userRole = await AsyncStorage.setItem('data', data.role);
+            const userRole = await AsyncStorage.setItem('role', data.role);
             navigation.replace("Home")
         } catch (error) {
             console.log("Login Error:", error);
