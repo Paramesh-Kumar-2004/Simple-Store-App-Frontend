@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
-import CallButton from "../Components/MakeCall";
+import CallButton from "../Components/CallButton";
 import { getChars, logoutUser } from "../API/API";
 import ProductList from "../Components/ProductList";
 
@@ -26,14 +26,16 @@ export default function HomeScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-            <Text
-                onPress={() => navigation.replace("AddProducts")}
-            > Register</Text>
-
-
-            <View>
+            <View style={styles.ProductItems}>
                 <ProductList />
             </View>
+
+            <TouchableOpacity
+                style={styles.Registerbutton}
+                onPress={() => navigation.replace("AddProducts")}
+            >
+                <Text style={styles.buttonText}>Add New Product</Text>
+            </TouchableOpacity>
 
         </View>
     );
@@ -41,8 +43,9 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 24,
-        flex: 1,
+        paddingVertical: 24,
+        paddingHorizontal: 12,
+        // flex: 1,
         backgroundColor: "#fff",
         justifyContent: "space-between",
         // alignItems: "center",
@@ -67,5 +70,20 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 50,
+    },
+    Registerbutton: {
+        backgroundColor: "#007BFF",
+        paddingVertical: 14,
+        borderRadius: 8,
+        width: "100%",
+        alignItems: "center",
+    },
+    buttonText: {
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: 18,
+    },
+    ProductItems: {
+        height: "80%",
     }
 });

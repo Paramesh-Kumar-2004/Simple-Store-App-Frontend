@@ -21,7 +21,7 @@ export default function App() {
         <Stack.Screen name="AddProducts" component={AddProduct} />
       </Stack.Navigator>
       <Toast />
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }
 

@@ -25,15 +25,16 @@ const CallButton = ({ phoneNumber = Phone_Number }) => {
 
   return (
     <TouchableOpacity style={styles.button} onPress={handleCall}>
-      <Text style={styles.text}>Call {phoneNumber}</Text>
+      <Text style={styles.text}>Call</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
+    width:"50%",
     backgroundColor: '#4CAF50',
-    padding: 15,
+    padding: 12,
     borderRadius: 8,
     alignItems: 'center',
     margin: 10

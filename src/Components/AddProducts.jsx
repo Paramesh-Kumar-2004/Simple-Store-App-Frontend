@@ -33,17 +33,17 @@ const AddProduct = () => {
             setMessage(res.message || "Product created successfully ✅");
 
             // Reset form
-            // setFormData({
-            //     name: "",
-            //     model: "",
-            //     price: "",
-            //     category: "",
-            //     description: "",
-            //     stock: "",
-            //     sellerName: "",
-            //     sellerEmail: "",
-            //     sellerPhone: "",
-            // });
+            setFormData({
+                name: "",
+                model: "",
+                price: "",
+                category: "",
+                description: "",
+                stock: "",
+                sellerName: "",
+                sellerEmail: "",
+                sellerPhone: "",
+            });
         } catch (err) {
             console.log("Error:", err);
             setMessage(err.message || "Failed to create product ❌");

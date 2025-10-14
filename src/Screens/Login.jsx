@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import Toast from "react-native-toast-message";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import { loginUser } from "../API/API";
 
@@ -20,12 +22,12 @@ export default function LoginScreen({ navigation }) {
             setLoading(true);
             const data = await loginUser({ email, password });
             console.log("Login Success:", data);
-            // Alert.alert("Success", "Login Successful ✅");
             Toast.show({
                 type: "success",
                 text1: "Log In successfull!",
                 position: "top",
             });
+            const userRole = await AsyncStorage.setItem('data', data.role);
             navigation.replace("Home")
         } catch (error) {
             console.log("Login Error:", error);
