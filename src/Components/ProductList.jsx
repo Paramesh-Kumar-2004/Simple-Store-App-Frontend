@@ -59,6 +59,10 @@ const ProductList = () => {
         }
     }
 
+    async function HandleUpdateStack(id) {
+        console.log(id)
+    }
+
     const renderItem = ({ item }) => (
         <View style={styles.card}>
             <Text style={styles.name}>{item.name}</Text>
