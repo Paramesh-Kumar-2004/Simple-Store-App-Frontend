@@ -12,6 +12,8 @@ const ProductList = () => {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
     const [userRole, setUserRole] = useState("normal")
+    const [updateStack, setUpdateStack] = useState("")
+    const [updateModal, setUpdateModal] = useState(false)
 
 
     useEffect(() => {
@@ -87,10 +89,14 @@ const ProductList = () => {
                         <Text style={{ fontWeight: "bold" }}>Phone: </Text>
                         {item.sellerPhone}
                     </Text>
-
                 </View>
 
             </View>
+
+            <TouchableOpacity onPress={() => { setUpdateModal(!updateModal) }}>
+                <Text>Update Stack</Text>
+            </TouchableOpacity>
+
             <View style={styles.Buttons}>
                 {userRole == "admin" && (
                     <TouchableOpacity style={styles.DeleteButton}
