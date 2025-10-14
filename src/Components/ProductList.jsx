@@ -159,27 +159,43 @@ const ProductList = () => {
 
             {updateModal && (
                 <View style={styles.StackModal}>
-                    <TextInput
-                        placholder="Enter The Stack"
-                    />
 
-                    <TouchableOpacity style={styles.UpdateStackButton}
-                        onPress={() => {
-                            setUpdateModal(!updateModal)
-                            console.log(updateModal)
-                        }}
-                    >
-                        <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <Text style={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            margin: 5,
+                        }}>Stack :</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Enter The Stack"
+                            onChangeText={(text) => {
+                                setUpdateStack(text)
+                            }}
+                        />
+                    </View>
 
-                    <TouchableOpacity style={styles.CloseStackButton}
-                        onPress={() => {
-                            setUpdateModal(!updateModal)
-                            console.log(updateModal)
-                        }}
-                    >
-                        <Text style={styles.UpdateStackButtonText}>Close</Text>
-                    </TouchableOpacity>
+                    <View style={styles.Buttons}>
+
+                        <TouchableOpacity style={styles.UpdateStackButton}
+                            onPress={() => {
+                                setUpdateModal(!updateModal)
+                                console.log(updateModal)
+                            }}
+                        >
+                            <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.CloseStackButton}
+                            onPress={() => {
+                                setUpdateModal(!updateModal)
+                                console.log(updateModal)
+                            }}
+                        >
+                            <Text style={styles.UpdateStackButtonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
             )}
         </View>
@@ -245,9 +261,11 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     Buttons: {
-        justifyContent: "space-around",
+        justifyContent: "space-evenly",
         alignItems: "center",
-        flexDirection: "row-reverse"
+        flexDirection: "row",
+        flex: 1,
+        width: "100%"
     }
     ,
     DeleteButton: {
@@ -266,7 +284,9 @@ const styles = StyleSheet.create({
         backgroundColor: "skyblue",
         padding: 12,
         borderRadius: 8,
-        width: "100%",
+        // width: "40%",
+        flex: 1,
+        marginHorizontal: 12,
         alignItems: "center",
     },
     CloseStackButton: {
@@ -274,23 +294,31 @@ const styles = StyleSheet.create({
         marginVertical: 12,
         padding: 12,
         borderRadius: 8,
-        width: "100%",
+        // width: "40%",
+        flex: 1,
+        marginHorizontal: 12,
         alignItems: "center",
     },
     UpdateStackButtonText: {
         color: "white",
     },
     StackModal: {
+        padding: 10,
         position: "absolute",
-        top: 0,
-        width: "100%",
-        height: "100%",
-        borderRadius: 10,
+        top: 12,
+        borderRadius: 12,
         backgroundColor: "lightgray",
-        padding: 3,
+        height: "50%",
+        alignSelf: "center",
         alignItems: "center",
-        justifyContent: "center",
-    }
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: "#ccc",
+        padding: 10,
+        borderRadius: 6,
+        backgroundColor: "#fff",
+    },
 });
 
 export default ProductList;
