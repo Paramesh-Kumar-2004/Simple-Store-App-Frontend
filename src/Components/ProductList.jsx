@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+    View,
+    Text,
+    FlatList,
+    StyleSheet,
+    ActivityIndicator,
+    TouchableOpacity,
+    TextInput
+} from "react-native";
 import { deleteProduct, getAllProducts } from "../API/API";
 import CallButton from "./CallButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,7 +21,7 @@ const ProductList = () => {
     const [message, setMessage] = useState("");
     const [userRole, setUserRole] = useState("normal")
     const [updateStack, setUpdateStack] = useState("")
-    const [updateModal, setUpdateModal] = useState(false)
+    const [updateModal, setUpdateModal] = useState(true)
 
 
     useEffect(() => {
@@ -99,7 +107,12 @@ const ProductList = () => {
 
             {userRole == "admin" && (
                 <View style={styles.Buttons}>
-                    <TouchableOpacity style={styles.UpdateStackButton} onPress={() => { setUpdateModal(!updateModal) }}>
+                    <TouchableOpacity style={styles.UpdateStackButton}
+                        onPress={() => {
+                            setUpdateModal(!updateModal)
+                            console.log(updateModal)
+                        }}
+                    >
                         <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
                     </TouchableOpacity>
                 </View>
@@ -135,13 +148,41 @@ const ProductList = () => {
     }
 
     return (
-        <FlatList
-            data={products}
-            keyExtractor={(item) => item._id}
-            renderItem={renderItem}
-            contentContainerStyle={styles.listContainer}
-            showsVerticalScrollIndicator={false}
-        />
+        <View>
+            <FlatList
+                data={products}
+                keyExtractor={(item) => item._id}
+                renderItem={renderItem}
+                contentContainerStyle={styles.listContainer}
+                showsVerticalScrollIndicator={false}
+            />
+
+            {updateModal && (
+                <View style={styles.StackModal}>
+                    <TextInput
+                        placholder="Enter The Stack"
+                    />
+
+                    <TouchableOpacity style={styles.UpdateStackButton}
+                        onPress={() => {
+                            setUpdateModal(!updateModal)
+                            console.log(updateModal)
+                        }}
+                    >
+                        <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.CloseStackButton}
+                        onPress={() => {
+                            setUpdateModal(!updateModal)
+                            console.log(updateModal)
+                        }}
+                    >
+                        <Text style={styles.UpdateStackButtonText}>Close</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+        </View>
     );
 };
 
@@ -228,8 +269,27 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
     },
+    CloseStackButton: {
+        backgroundColor: "red",
+        marginVertical: 12,
+        padding: 12,
+        borderRadius: 8,
+        width: "100%",
+        alignItems: "center",
+    },
     UpdateStackButtonText: {
         color: "white",
+    },
+    StackModal: {
+        position: "absolute",
+        top: 0,
+        width: "100%",
+        height: "100%",
+        borderRadius: 10,
+        backgroundColor: "lightgray",
+        padding: 3,
+        alignItems: "center",
+        justifyContent: "center",
     }
 });
 
