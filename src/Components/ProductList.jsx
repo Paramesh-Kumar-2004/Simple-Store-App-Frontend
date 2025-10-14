@@ -97,9 +97,13 @@ const ProductList = () => {
 
             </View>
 
-            <TouchableOpacity onPress={() => { setUpdateModal(!updateModal) }}>
-                <Text>Update Stack</Text>
-            </TouchableOpacity>
+            {userRole == "admin" && (
+                <View style={styles.Buttons}>
+                    <TouchableOpacity style={styles.UpdateStackButton} onPress={() => { setUpdateModal(!updateModal) }}>
+                        <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
 
             <View style={styles.Buttons}>
                 {userRole == "admin" && (
@@ -217,6 +221,16 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 18,
     },
+    UpdateStackButton: {
+        backgroundColor: "skyblue",
+        padding: 12,
+        borderRadius: 8,
+        width: "100%",
+        alignItems: "center",
+    },
+    UpdateStackButtonText: {
+        color: "white",
+    }
 });
 
 export default ProductList;
