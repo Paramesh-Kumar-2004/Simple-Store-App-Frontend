@@ -105,7 +105,7 @@ const ProductList = () => {
 
             </View>
 
-            {userRole == "admin" && (
+            {/* {userRole == "admin" && (
                 <View style={styles.Buttons}>
                     <TouchableOpacity style={styles.UpdateStackButton}
                         onPress={() => {
@@ -116,46 +116,7 @@ const ProductList = () => {
                         <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
                     </TouchableOpacity>
                 </View>
-            )}
-
-            <View style={styles.Buttons}>
-                {userRole == "admin" && (
-                    <TouchableOpacity style={styles.DeleteButton}
-                        onPress={() => HandleDeleteProduct(item)}
-                    >
-                        <Text style={styles.DeletebuttonText}>Delete</Text>
-                    </TouchableOpacity>
-                )}
-                <CallButton />
-            </View>
-        </View>
-    );
-
-    if (loading) {
-        return (
-            <View style={styles.center}>
-                <ActivityIndicator size="large" color="#28a745" />
-            </View>
-        );
-    }
-
-    if (message) {
-        return (
-            <View style={styles.center}>
-                <Text style={styles.message}>{message}</Text>
-            </View>
-        );
-    }
-
-    return (
-        <View>
-            <FlatList
-                data={products}
-                keyExtractor={(item) => item._id}
-                renderItem={renderItem}
-                contentContainerStyle={styles.listContainer}
-                showsVerticalScrollIndicator={false}
-            />
+            )} */}
 
             {updateModal && (
                 <View style={styles.StackModal}>
@@ -198,7 +159,56 @@ const ProductList = () => {
 
                 </View>
             )}
+
+            <View style={styles.Buttons}>
+                {userRole == "admin" && (
+                    <TouchableOpacity style={styles.DeleteButton}
+                        onPress={() => HandleDeleteProduct(item)}
+                    >
+                        <Text style={styles.DeletebuttonText}>Delete</Text>
+                    </TouchableOpacity>
+                )}
+
+                <View style={styles.Buttons}>
+                    <TouchableOpacity style={styles.UpdateStackButton}
+                        onPress={() => {
+                            setUpdateModal(!updateModal)
+                            console.log(updateModal)
+                        }}
+                    >
+                        <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <CallButton />
+            </View>
         </View>
+    );
+
+    if (loading) {
+        return (
+            <View style={styles.center}>
+                <ActivityIndicator size="large" color="#28a745" />
+            </View>
+        );
+    }
+
+    if (message) {
+        return (
+            <View style={styles.center}>
+                <Text style={styles.message}>{message}</Text>
+            </View>
+        );
+    }
+
+    return (
+        <FlatList
+            data={products}
+            keyExtractor={(item) => item._id}
+            renderItem={renderItem}
+            contentContainerStyle={styles.listContainer}
+            showsVerticalScrollIndicator={false}
+        />
     );
 };
 
