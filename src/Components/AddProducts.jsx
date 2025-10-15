@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 import { createProduct } from "../API/API"; // your axios API
 
-const AddProduct = () => {
+
+const AddProduct = ({ navigation }) => {
     const [formData, setFormData] = useState({
         name: "",
         model: "",
@@ -69,11 +70,18 @@ const AddProduct = () => {
                 </View>
             ))}
 
-            <TouchableOpacity style={styles.button} onPress={handleSubmit} disabled={loading}>
-                {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Create Product</Text>}
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row", gap: 14 }}>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit} disabled={loading}>
+                    {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Create Product</Text>}
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.Backbutton} onPress={() => { navigation.replace("Home") }} >
+                    <Text style={styles.buttonText}>Back</Text>
+                </TouchableOpacity>
+            </View>
 
             {message ? <Text style={styles.message}>{message}</Text> : null}
+
         </ScrollView>
     );
 };
@@ -112,6 +120,15 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         alignItems: "center",
         marginTop: 10,
+        flex: 1,
+    },
+    Backbutton: {
+        backgroundColor: "red",
+        padding: 15,
+        borderRadius: 6,
+        alignItems: "center",
+        marginTop: 10,
+        flex: 1,
     },
     buttonText: {
         color: "#fff",

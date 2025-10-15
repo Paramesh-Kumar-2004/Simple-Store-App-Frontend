@@ -21,7 +21,7 @@ const ProductList = () => {
     const [message, setMessage] = useState("");
     const [userRole, setUserRole] = useState("normal")
     const [updateStack, setUpdateStack] = useState("")
-    const [updateModal, setUpdateModal] = useState(true)
+    const [updateModal, setUpdateModal] = useState(false)
 
 
     useEffect(() => {
@@ -105,8 +105,17 @@ const ProductList = () => {
 
             </View>
 
-            {/* {userRole == "admin" && (
+            {userRole == "admin" && (
                 <View style={styles.Buttons}>
+
+                    {/* Product Delete Button */}
+                    <TouchableOpacity style={styles.DeleteButton}
+                        onPress={() => HandleDeleteProduct(item)}
+                    >
+                        <Text style={styles.DeletebuttonText}>Delete</Text>
+                    </TouchableOpacity>
+
+                    {/* Update Stock Button */}
                     <TouchableOpacity style={styles.UpdateStackButton}
                         onPress={() => {
                             setUpdateModal(!updateModal)
@@ -115,8 +124,13 @@ const ProductList = () => {
                     >
                         <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
                     </TouchableOpacity>
+
                 </View>
-            )} */}
+            )}
+
+
+            <CallButton />
+
 
             {updateModal && (
                 <View style={styles.StackModal}>
@@ -126,7 +140,7 @@ const ProductList = () => {
                             fontSize: 18,
                             fontWeight: "bold",
                             margin: 5,
-                        }}>Stack :</Text>
+                        }}>Stack : {item.stock}</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Enter The Stack"
@@ -159,29 +173,6 @@ const ProductList = () => {
 
                 </View>
             )}
-
-            <View style={styles.Buttons}>
-                {userRole == "admin" && (
-                    <TouchableOpacity style={styles.DeleteButton}
-                        onPress={() => HandleDeleteProduct(item)}
-                    >
-                        <Text style={styles.DeletebuttonText}>Delete</Text>
-                    </TouchableOpacity>
-                )}
-
-                <View style={styles.Buttons}>
-                    <TouchableOpacity style={styles.UpdateStackButton}
-                        onPress={() => {
-                            setUpdateModal(!updateModal)
-                            console.log(updateModal)
-                        }}
-                    >
-                        <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <CallButton />
-            </View>
         </View>
     );
 
@@ -271,18 +262,21 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     Buttons: {
-        justifyContent: "space-evenly",
+        flexWrap: "nowrap",
+        justifyContent: "space-between",
         alignItems: "center",
         flexDirection: "row",
         flex: 1,
-        width: "100%"
+        width: "100%",
+        backgroundColor: "pink",
     }
     ,
     DeleteButton: {
         backgroundColor: "red",
         padding: 12,
         borderRadius: 8,
-        width: "50%",
+        minWidth: 100,
+        // flex: 1,
         alignItems: "center",
     },
     DeletebuttonText: {
@@ -294,10 +288,15 @@ const styles = StyleSheet.create({
         backgroundColor: "skyblue",
         padding: 12,
         borderRadius: 8,
-        // width: "40%",
-        flex: 1,
+        minWidth: 100,
+        // flex: 1,
         marginHorizontal: 12,
         alignItems: "center",
+    },
+    UpdateStackButtonText: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 18,
     },
     CloseStackButton: {
         backgroundColor: "red",
@@ -308,9 +307,6 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 12,
         alignItems: "center",
-    },
-    UpdateStackButtonText: {
-        color: "white",
     },
     StackModal: {
         padding: 10,

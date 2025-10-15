@@ -2,8 +2,8 @@ const axios = require("axios");
 
 
 const api = axios.create({
-    // baseURL: "http://10.209.41.238:2004/api/v1",
-    baseURL: "http://172.26.70.115:2004/api/v1",
+    baseURL: "http://10.209.41.238:2004/api/v1",
+    // baseURL: "http://172.26.70.115:2004/api/v1",
 });
 
 
