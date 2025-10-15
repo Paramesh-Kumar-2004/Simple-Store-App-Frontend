@@ -32,7 +32,7 @@ const CallButton = ({ phoneNumber = Phone_Number }) => {
 
 const styles = StyleSheet.create({
   button: {
-    width:"50%",
+    width:"100%",
     backgroundColor: '#4CAF50',
     padding: 12,
     borderRadius: 8,

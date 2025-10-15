@@ -22,6 +22,7 @@ const ProductList = () => {
     const [userRole, setUserRole] = useState("normal")
     const [updateStack, setUpdateStack] = useState("")
     const [updateModal, setUpdateModal] = useState(false)
+    const [selectedProductId, setSelectedProductId] = useState(null);
 
 
     useEffect(() => {
@@ -67,12 +68,45 @@ const ProductList = () => {
         }
     }
 
-    async function HandleUpdateStack(id) {
-        console.log(id)
+    async function HandleUpdateProduct() {
+        if (!updateStack || !selectedProductId) {
+            Toast.show({
+                type: "error",
+                text1: "Please enter stock value",
+                position: "top",
+            });
+            return;
+        }
+
+        try {
+            const response = await updateProduct(selectedProductId, { stock: updateStack })
+            console.log("Updated Product:", response);
+
+            Toast.show({
+                type: "success",
+                text1: "Stock Updated Successfully",
+                position: "top",
+            });
+
+            fetchProducts();
+        } catch (error) {
+            console.log("Update Error:", error);
+            Toast.show({
+                type: "error",
+                text1: "Failed to update stock",
+                position: "top",
+            });
+        } finally {
+            setUpdateModal(false);
+            setUpdateStack("");
+            setSelectedProductId(null);
+        }
     }
+
 
     const renderItem = ({ item }) => (
         <View style={styles.card}>
+
             <Text style={styles.name}>{item.name}</Text>
             <View style={{ flex: 1, flexDirection: "row" }}>
 
@@ -105,75 +139,35 @@ const ProductList = () => {
 
             </View>
 
-            {userRole == "admin" && (
-                <View style={styles.Buttons}>
-
-                    {/* Update Stock Button */}
-                    <TouchableOpacity style={styles.UpdateStackButton}
-                        onPress={() => {
-                            setUpdateModal(!updateModal)
-                            console.log(updateModal)
-                        }}
-                    >
-                        <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
-                    </TouchableOpacity>
-
-
-                    {/* Product Delete Button */}
-                    <TouchableOpacity style={styles.DeleteButton}
-                        onPress={() => HandleDeleteProduct(item)}
-                    >
-                        <Text style={styles.DeletebuttonText}>Delete</Text>
-                    </TouchableOpacity>
-
-                </View>
-            )}
-
-
-            <CallButton />
-
-
-            {updateModal && (
-                <View style={styles.StackModal}>
-
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            margin: 5,
-                        }}>Stack : {item.stock}</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Enter The Stack"
-                            onChangeText={(text) => {
-                                setUpdateStack(text)
-                            }}
-                        />
-                    </View>
-
+            <View style={{ alignItems: "center", marginTop: 12 }}>
+                {userRole == "admin" && (
                     <View style={styles.Buttons}>
 
+                        {/* Update Stock Button */}
                         <TouchableOpacity style={styles.UpdateStackButton}
                             onPress={() => {
+                                setSelectedProductId(item._id);
                                 setUpdateModal(!updateModal)
                                 console.log(updateModal)
                             }}
                         >
-                            <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
+                            <Text style={styles.UpdateStackButtonText}>Update</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.CloseStackButton}
-                            onPress={() => {
-                                setUpdateModal(!updateModal)
-                                console.log(updateModal)
-                            }}
+
+                        {/* Product Delete Button */}
+                        <TouchableOpacity style={styles.DeleteButton}
+                            onPress={() => HandleDeleteProduct(item)}
                         >
-                            <Text style={styles.UpdateStackButtonText}>Close</Text>
+                            <Text style={styles.DeletebuttonText}>Delete</Text>
                         </TouchableOpacity>
+
                     </View>
+                )}
 
-                </View>
-            )}
+                <CallButton />
+            </View>
+
         </View>
     );
 
@@ -194,13 +188,62 @@ const ProductList = () => {
     }
 
     return (
-        <FlatList
-            data={products}
-            keyExtractor={(item) => item._id}
-            renderItem={renderItem}
-            contentContainerStyle={styles.listContainer}
-            showsVerticalScrollIndicator={false}
-        />
+        <View>
+
+            <FlatList
+                data={products}
+                keyExtractor={(item) => item._id}
+                renderItem={renderItem}
+                contentContainerStyle={styles.listContainer}
+                showsVerticalScrollIndicator={false}
+            />
+
+            {updateModal && (
+                <View style={styles.StackModal}>
+                    <View style={{ backgroundColor: "white", padding: 20, borderRadius: 12, width: "80%", height: "50%", alignItems: "center", justifyContent: "space-around" }}>
+
+                        <Text style={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            marginBottom: 10,
+                            textAlign: "center"
+                        }}>
+                            Update Stock
+                        </Text>
+
+                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}
+                        >
+                            <Text style={{ fontSize: 16, fontWeight: "bold", marginRight: 8 }}>Stock:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter new stock"
+                                keyboardType="numeric"
+                                value={updateStack}
+                                onChangeText={setUpdateStack}
+                            />
+                        </View>
+
+                        <View style={styles.Buttons}>
+                            <TouchableOpacity
+                                style={styles.UpdateModalBtn}
+                                onPress={HandleUpdateProduct}
+                            >
+                                <Text style={styles.ModalBtnText}>Update Stock</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.ModalCloseBtn}
+                                onPress={() => setUpdateModal(false)}
+                            >
+                                <Text style={styles.ModalBtnText}>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+                </View>
+            )}
+
+        </View>
     );
 };
 
@@ -265,6 +308,7 @@ const styles = StyleSheet.create({
     Buttons: {
         flexWrap: "nowrap",
         justifyContent: "space-around",
+        gap: 12,
         alignItems: "center",
         flexDirection: "row",
         flex: 1,
@@ -276,7 +320,7 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 8,
         minWidth: 100,
-        // flex: 1,
+        flex: 1,
         alignItems: "center",
     },
     DeletebuttonText: {
@@ -289,7 +333,7 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 8,
         minWidth: 100,
-        // flex: 1,
+        flex: 1,
         alignItems: "center",
     },
     UpdateStackButtonText: {
@@ -308,14 +352,37 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     StackModal: {
-        padding: 10,
         position: "absolute",
-        top: 12,
-        borderRadius: 12,
-        backgroundColor: "lightgray",
-        height: "50%",
-        alignSelf: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0,0,0,0.2)",
+        justifyContent: "center",
         alignItems: "center",
+        zIndex: 10,
+    },
+    UpdateModalBtn: {
+        backgroundColor: "green",
+        padding: 12,
+        borderRadius: 8,
+        flex: 1,
+        alignItems: "center",
+        marginHorizontal: 5,
+    },
+    ModalCloseBtn: {
+        backgroundColor: "red",
+        padding: 12,
+        borderRadius: 8,
+        flex: 1,
+        alignItems: "center",
+        marginHorizontal: 5,
+    },
+    ModalBtnText: {
+        textAlign: "center",
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 14,
     },
     input: {
         borderWidth: 1,

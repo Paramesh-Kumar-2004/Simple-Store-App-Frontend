@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 import { createProduct } from "../API/API"; // your axios API
+import Toast from "react-native-toast-message";
 
 
 const AddProduct = ({ navigation }) => {
@@ -32,6 +33,11 @@ const AddProduct = ({ navigation }) => {
         try {
             const res = await createProduct(formData); // send JSON, no FormData
             setMessage(res.message || "Product created successfully ✅");
+            Toast.show({
+                type: "success",
+                text1: message,
+                position: "top",
+            });
 
             // Reset form
             setFormData({
