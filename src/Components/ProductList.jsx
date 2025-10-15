@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     TextInput
 } from "react-native";
-import { deleteProduct, getAllProducts } from "../API/API";
+import { deleteProduct, getAllProducts, updateProduct } from "../API/API";
 import CallButton from "./CallButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
@@ -28,7 +28,7 @@ const ProductList = () => {
     useEffect(() => {
         fetchProducts();
         getUserRole()
-    }, []);
+    }, [updateStack]);
 
     const getUserRole = async () => {
         const role = await AsyncStorage.getItem("role");
@@ -200,19 +200,20 @@ const ProductList = () => {
 
             {updateModal && (
                 <View style={styles.StackModal}>
-                    <View style={{ backgroundColor: "white", padding: 20, borderRadius: 12, width: "80%", height: "50%", alignItems: "center", justifyContent: "space-around" }}>
+                    <View style={{ backgroundColor: "white", padding: 20, borderRadius: 12, width: "80%", height: "50%", flexDirection: "column", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
 
-                        <Text style={{
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            marginBottom: 10,
-                            textAlign: "center"
-                        }}>
-                            Update Stock
-                        </Text>
+                        <View>
+                            <Text style={{
+                                fontSize: 18,
+                                fontWeight: "bold",
+                                marginBottom: 10,
+                                textAlign: "center"
+                            }}>
+                                Update Stock
+                            </Text>
+                        </View>
 
-                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}
-                        >
+                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 24 }}>
                             <Text style={{ fontSize: 16, fontWeight: "bold", marginRight: 8 }}>Stock:</Text>
                             <TextInput
                                 style={styles.input}
@@ -357,6 +358,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
+        minHeight: 500,
         backgroundColor: "rgba(0,0,0,0.2)",
         justifyContent: "center",
         alignItems: "center",
