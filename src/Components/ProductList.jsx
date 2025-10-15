@@ -108,13 +108,6 @@ const ProductList = () => {
             {userRole == "admin" && (
                 <View style={styles.Buttons}>
 
-                    {/* Product Delete Button */}
-                    <TouchableOpacity style={styles.DeleteButton}
-                        onPress={() => HandleDeleteProduct(item)}
-                    >
-                        <Text style={styles.DeletebuttonText}>Delete</Text>
-                    </TouchableOpacity>
-
                     {/* Update Stock Button */}
                     <TouchableOpacity style={styles.UpdateStackButton}
                         onPress={() => {
@@ -123,6 +116,14 @@ const ProductList = () => {
                         }}
                     >
                         <Text style={styles.UpdateStackButtonText}>Update Stack</Text>
+                    </TouchableOpacity>
+
+
+                    {/* Product Delete Button */}
+                    <TouchableOpacity style={styles.DeleteButton}
+                        onPress={() => HandleDeleteProduct(item)}
+                    >
+                        <Text style={styles.DeletebuttonText}>Delete</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -263,14 +264,13 @@ const styles = StyleSheet.create({
     },
     Buttons: {
         flexWrap: "nowrap",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         alignItems: "center",
         flexDirection: "row",
         flex: 1,
         width: "100%",
-        backgroundColor: "pink",
-    }
-    ,
+        // backgroundColor: "pink",
+    },
     DeleteButton: {
         backgroundColor: "red",
         padding: 12,
@@ -285,12 +285,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     UpdateStackButton: {
-        backgroundColor: "skyblue",
+        backgroundColor: "blue",
         padding: 12,
         borderRadius: 8,
         minWidth: 100,
         // flex: 1,
-        marginHorizontal: 12,
         alignItems: "center",
     },
     UpdateStackButtonText: {
