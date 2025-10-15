@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     Buttons: {
-        flexWrap: "nowrap",
+        flexWrap: "wrap",
         justifyContent: "space-around",
         gap: 12,
         alignItems: "center",
