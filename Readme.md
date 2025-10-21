@@ -1,4 +1,4 @@
-# Store — Frontend
+# Store — Frontend (This Is Just A Prototype)
 
 Small, focused frontend for the Store project. This README contains quick start instructions, common commands, and structure notes so contributors can get started quickly.
 
