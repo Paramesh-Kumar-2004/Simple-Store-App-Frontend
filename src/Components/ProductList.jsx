@@ -31,7 +31,7 @@ const ProductList = () => {
 
     useEffect(() => {
         fetchProducts();
-        getUserRole()
+        getUserRole();
     }, [updateStack]);
 
     const getUserRole = async () => {
