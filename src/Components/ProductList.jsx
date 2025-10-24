@@ -16,6 +16,7 @@ import Toast from "react-native-toast-message";
 
 
 const ProductList = () => {
+
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
@@ -23,7 +24,6 @@ const ProductList = () => {
     const [updateStack, setUpdateStack] = useState("")
     const [updateModal, setUpdateModal] = useState(false)
     const [selectedProductId, setSelectedProductId] = useState(null);
-
 
     useEffect(() => {
         fetchProducts();
@@ -102,7 +102,6 @@ const ProductList = () => {
             setSelectedProductId(null);
         }
     }
-
 
     const renderItem = ({ item }) => (
         <View style={styles.card}>
