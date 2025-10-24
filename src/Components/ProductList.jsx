@@ -8,7 +8,11 @@ import {
     TouchableOpacity,
     TextInput
 } from "react-native";
-import { deleteProduct, getAllProducts, updateProduct } from "../API/API";
+import {
+    deleteProduct,
+    getAllProducts,
+    updateProduct
+} from "../API/API";
 import CallButton from "./CallButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
