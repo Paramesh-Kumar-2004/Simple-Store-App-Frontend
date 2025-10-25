@@ -5,6 +5,7 @@ import Toast from "react-native-toast-message";
 
 
 const AddProduct = ({ navigation }) => {
+
     const [formData, setFormData] = useState({
         name: "",
         model: "",
